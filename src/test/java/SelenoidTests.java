@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.get;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -13,7 +14,7 @@ public class SelenoidTests {
     // Selenoid alive or dead test
     // Make request to https://selenoid.autotests.cloud/status
     // Check status code 200 (response ok)
-    // Check errors []
+    // Check total:5
     /*
     {
         state: {},
@@ -75,4 +76,15 @@ public class SelenoidTests {
                 .path("state.total");
         assertEquals(5, response);
     }
+
+    @Test
+    void successStatusCheckTotalFieldWithAssertJTest(){
+        int response = get("https://selenoid.autotests.cloud/status")
+                .then()
+                .statusCode(200)
+                .extract()
+                .path("state.total");
+        assertThat(response).isEqualTo(5);
+    }
+
 }
