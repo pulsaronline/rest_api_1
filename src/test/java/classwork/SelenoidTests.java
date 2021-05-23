@@ -1,3 +1,5 @@
+package classwork;
+
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.Test;

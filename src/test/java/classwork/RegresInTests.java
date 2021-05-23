@@ -1,3 +1,5 @@
+package classwork;
+
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -6,7 +8,7 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.is;
 
-public class RegressInTests {
+public class RegresInTests {
 
     @BeforeAll
     static void setup(){
@@ -27,7 +29,6 @@ public class RegressInTests {
     }
 
     @Test
-
     void successUsersLoginTest(){
         given()
                 .contentType(JSON)
