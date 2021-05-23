@@ -1,15 +1,20 @@
 package homework;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
+
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.*;
-import static org.hamcrest.Matchers.nullValue;
 
 public class RegresInTests {
     @BeforeAll
@@ -122,9 +127,13 @@ public class RegresInTests {
     @Test
     public void successfulUserCreate() {
         String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+        Map<String, Object> data = new HashMap<>();
+        data.put("name", "morpheus");
+        data.put("job", "leader");
 
-        given().contentType(JSON)
-                .body("{ \"name\": \"morpheus\", \"job\": \"leader\" }")
+        given()
+                .contentType(ContentType.JSON)
+                .body(data)
                 .when()
                 .post("/api/users")
                 .then()
@@ -139,9 +148,12 @@ public class RegresInTests {
     @Test
     public void successfulUserUpdate() {
         String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+        Map<String, Object> data = new HashMap<>();
+        data.put("name", "neo");
+        data.put("job", "the chosen one");
 
         given().contentType(JSON)
-                .body("{ \"name\": \"neo\", \"job\": \"the chosen one\" }")
+                .body(data)
                 .when()
                 .post("/api/users/2")
                 .then()
@@ -164,8 +176,12 @@ public class RegresInTests {
     // user register: successful (200)
     @Test
     void successfulUserRegister() {
+        Map<String, Object> data = new HashMap<>();
+        data.put("email", "eve.holt@reqres.in");
+        data.put("password", "pistol");
+
         given().contentType(JSON)
-                .body("{ \"email\": \"eve.holt@reqres.in\", \"password\": \"pistol\" }")
+                .body(data)
                 .when()
                 .post("api/register")
                 .then()
@@ -177,8 +193,12 @@ public class RegresInTests {
     // user login: successful (200)
     @Test
     void successfulUserLogin(){
+        Map<String, Object> data = new HashMap<>();
+        data.put("email", "eve.holt@reqres.in");
+        data.put("password", "cityslicka");
+
         given().contentType(JSON)
-                .body("{ \"email\": \"eve.holt@reqres.in\", \"password\": \"cityslicka\" }")
+                .body(data)
                 .when()
                 .post("/api/login")
                 .then()
@@ -189,8 +209,11 @@ public class RegresInTests {
     // user login: unsuccessful (400)
     @Test
     void unSuccessfulUserLogin(){
+        Map<String, Object> data = new HashMap<>();
+        data.put("email", "peter@klaven");
+
         given().contentType(JSON)
-                .body("{ \"email\": \"peter@klaven\" }")
+                .body(data)
                 .when()
                 .post("/api/login")
                 .then()
